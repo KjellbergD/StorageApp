@@ -31,13 +31,22 @@ namespace StorageApp.Models
             };
 
             _context.User.Add(entity);
+
             var affectedRows = await _context.SaveChangesAsync();
+
             return (affectedRows, entity.Id);
         }
 
         public async Task<UserDetailsDTO> Read(int UserId)
         {
-            throw new NotImplementedException();
+            var User =  from h in _context.User
+                        where h.Id == UserId
+                        select new UserDetailsDTO
+                        {
+                            
+                        };
+
+            return await User.FirstOrDefaultAsync();
         }
 
         public async Task<HttpStatusCode> Update(UserUpdateDTO User)
