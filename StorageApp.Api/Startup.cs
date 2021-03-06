@@ -4,13 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
+using StorageApp.Entities;
 
 namespace StorageApp.Api
 {
@@ -28,6 +29,10 @@ namespace StorageApp.Api
         {
 
             services.AddControllers();
+            services.AddDbContext<StorageContext>(options =>
+               options.UseSqlServer(Configuration.GetConnectionString("ConnectionString"),
+               b => b.MigrationsAssembly("StorageApp.Api")));
+               
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "StorageApp.Api", Version = "v1" });

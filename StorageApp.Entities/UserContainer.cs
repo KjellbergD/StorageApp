@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 namespace StorageApp.Entities
 {
-    public class Item
+    public class UserContainer
     {
-        public int Id { get; set; }
+        public int UserId { get; set; }
 
-        public string Name { get; set; }
-
-        public Container Container { get; set; }
+        public User User { get; set; }
 
         public int ContainerId { get; set; }
+
+        public Container Container { get; set; }
     }
 }
