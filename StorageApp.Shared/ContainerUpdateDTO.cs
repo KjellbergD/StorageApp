@@ -8,6 +8,8 @@ namespace StorageApp.Shared
 
         public string Name { get; set; }
 
-        public ICollection<ItemDTO> Items { get; set; }
+        public int? ItemId { get; set; }
+
+        public int? NewUser { get; set; }
     }
 }

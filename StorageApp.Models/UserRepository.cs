@@ -60,6 +60,7 @@ namespace StorageApp.Models
 
             entity.UserName = User.UserName;
             entity.FullName = User.FullName;
+            if(User.NewContainer != null) entity.UserContainers.Add(await _context.UserContainer.FindAsync(entity.Id, User.NewContainer));
 
             await _context.SaveChangesAsync();
 
@@ -71,6 +72,12 @@ namespace StorageApp.Models
             var entity = await _context.User.FindAsync(UserId);
 
             if (entity == null) return NotFound;
+
+            var toRemove =  from uc in _context.UserContainer
+                            where uc.UserId == UserId
+                            select uc;
+            
+            _context.UserContainer.RemoveRange(toRemove);
 
             _context.User.Remove(entity);
             
