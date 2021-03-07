@@ -10,6 +10,6 @@ namespace StorageApp.Shared
 
         public string FullName { get; set; }
 
-        public ICollection<ContainerDTO> Containers { get; set; }
+        public ICollection<int> ContainerIds { get; set; }
     }
 }

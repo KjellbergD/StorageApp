@@ -39,11 +39,14 @@ namespace StorageApp.Models
 
         public async Task<UserDetailsDTO> Read(int UserId)
         {
-            var User =  from h in _context.User
-                        where h.Id == UserId
+            var User =  from u in _context.User
+                        where u.Id == UserId
                         select new UserDetailsDTO
                         {
-                            
+                            Id = u.Id,
+                            UserName = u.UserName,
+                            FullName = u.FullName,
+                            ContainerIds = u.UserContainers.Select(uc => uc.ContainerId).ToList()
                         };
 
             return await User.FirstOrDefaultAsync();
@@ -51,12 +54,29 @@ namespace StorageApp.Models
 
         public async Task<HttpStatusCode> Update(UserUpdateDTO User)
         {
-            throw new NotImplementedException();
+            var entity = await _context.User.FindAsync(User.Id);
+
+            if (entity == null) return NotFound;
+
+            entity.UserName = User.UserName;
+            entity.FullName = User.FullName;
+
+            await _context.SaveChangesAsync();
+
+            return NoContent;
         }
 
         public async Task<HttpStatusCode> Delete(int UserId)
         {
-            throw new NotImplementedException();
+            var entity = await _context.User.FindAsync(UserId);
+
+            if (entity == null) return NotFound;
+
+            _context.User.Remove(entity);
+            
+            await _context.SaveChangesAsync();
+
+            return NoContent;
         }
     }
 }
