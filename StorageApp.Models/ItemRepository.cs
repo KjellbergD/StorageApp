@@ -24,17 +24,11 @@ namespace StorageApp.Models
 
         public async Task<(int affectedRows, int id)> Create(ItemCreateDTO Item)
         {
-            var Containing = _context.Container.Find(Item.ContainerId);
-
             var entity = new Item
             {
                 Name = Item.Name,
-                Note = Item.Note,
-                ContainerId = Item.ContainerId,
-                Container = Containing
+                Note = Item.Note
             };
-
-            Containing.Items.Add(entity);
 
             _context.Item.Add(entity);
 
@@ -68,7 +62,7 @@ namespace StorageApp.Models
 
             await _context.SaveChangesAsync();
 
-            return NoContent;
+            return OK;
         }
 
         public async Task<HttpStatusCode> Delete(int ItemId)
@@ -77,13 +71,13 @@ namespace StorageApp.Models
 
             if (entity == null) return NotFound;
 
-            entity.Container.Items.Remove(entity);
-
+            if(entity.Container != null) entity.Container.Items.Remove(entity);
+            
             _context.Item.Remove(entity);
             
             await _context.SaveChangesAsync();
 
-            return NoContent;
+            return OK;
         }
     }
 }

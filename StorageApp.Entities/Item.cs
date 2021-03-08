@@ -12,7 +12,7 @@ namespace StorageApp.Entities
 
         public Container Container { get; set; }
 
-        public int ContainerId { get; set; }
+        public int? ContainerId { get; set; }
 
         public string Note { get; set; }
     }

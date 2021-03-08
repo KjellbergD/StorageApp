@@ -67,12 +67,23 @@ namespace StorageApp.Models
             if (entity == null) return NotFound;
 
             if(Container.Name != null) entity.Name = Container.Name;
-            if(Container.ItemId != null) entity.Items.Add(await _context.Item.FindAsync(Container.ItemId));
+            if(Container.ItemId != null) 
+            {
+                var Item = await _context.Item.FindAsync(Container.ItemId);
+                Console.WriteLine(Item.Name);
+                if(Item.ContainerId == null) 
+                {
+                    Item.Container = entity;
+                    Item.ContainerId = Container.Id;
+                    entity.Items.Add(Item);
+                }
+                else return BadRequest; // An item can only be assigned to 1 container
+            }
             if(Container.NewUser != null) entity.UserContainers.Add(await _context.UserContainer.FindAsync(Container.NewUser, entity.Id)); //maybe add to User aswell
 
             await _context.SaveChangesAsync();
 
-            return NoContent;
+            return OK;
         }
 
         public async Task<HttpStatusCode> Delete(int ContainerId)
@@ -91,7 +102,7 @@ namespace StorageApp.Models
             
             await _context.SaveChangesAsync();
 
-            return NoContent;
+            return OK;
         }
     }
 }

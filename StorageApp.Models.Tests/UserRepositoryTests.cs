@@ -11,7 +11,7 @@ using static System.Net.HttpStatusCode;
 
 namespace StorageApp.Models.Tests
 {
-    public class UserRepositoryTests
+    public class UserRepositoryTests : IDisposable
     {
         private readonly SqliteConnection _connection;
         private readonly StorageContext _context;
@@ -132,6 +132,12 @@ namespace StorageApp.Models.Tests
 
             // Assert
             Assert.Equal(OK, result);
+        }
+
+        public void Dispose()
+        {
+            _connection.Dispose();
+            _context.Dispose();
         }
     }
 }
