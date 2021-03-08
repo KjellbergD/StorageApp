@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StorageApp.Entities\StorageApp.Entities.csproj" />
+    <ProjectReference Include="..\StorageApp.Models\StorageApp.Models.csproj" />
   </ItemGroup>
 
 </Project>

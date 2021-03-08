@@ -51,6 +51,18 @@ namespace StorageApp.Models
             return await Item.FirstOrDefaultAsync();
         }
 
+        public IQueryable<ItemDetailsDTO> ReadFromContainer(int containerId) 
+        {
+            return  _context.Item
+                    .Where(i => i.ContainerId == containerId)
+                    .Select(i => new ItemDetailsDTO
+                        {
+                            Id = i.Id,
+                            Name = i.Name,
+                            Note = i.Note
+                    });
+        }
+
         public async Task<HttpStatusCode> Update(ItemUpdateDTO Item)
         {
             var entity = await _context.Item.FindAsync(Item.Id);

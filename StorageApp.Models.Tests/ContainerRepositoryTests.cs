@@ -79,7 +79,7 @@ namespace StorageApp.Models.Tests
         public async Task Read_all_containers_returns_correct_list()
         {
             // Act
-            var allContainers = await _repository.ReadAllContainers().ToListAsync();
+            var allContainers = await _repository.ReadFromUser(1).ToListAsync();
 
             // Assert
             Assert.Equal(1, allContainers.Count);

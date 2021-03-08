@@ -11,7 +11,7 @@ namespace StorageApp.Models
     {
         Task<(int affectedRows, int id)> Create(ContainerCreateDTO Container);
         Task<ContainerDetailsDTO> Read(int ContainerId);
-        IQueryable<ContainerListDTO> ReadAllContainers();
+        IQueryable<ContainerListDTO> ReadFromUser(int UserId);
         Task<HttpStatusCode> Update(ContainerUpdateDTO Container);
         Task<HttpStatusCode> Delete(int ContainerId);
     }

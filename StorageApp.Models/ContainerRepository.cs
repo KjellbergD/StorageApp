@@ -36,6 +36,8 @@ namespace StorageApp.Models
             entity.UserContainers.Add(UserContainer);
 
             _context.Container.Add(entity);
+            _context.UserContainer.Add(UserContainer);
+            _context.User.Find(Container.UserId).UserContainers.Add(UserContainer);
 
             var affectedRows = await _context.SaveChangesAsync();
 
@@ -65,10 +67,11 @@ namespace StorageApp.Models
             return await Container.FirstOrDefaultAsync();
         }
 
-        public IQueryable<ContainerListDTO> ReadAllContainers()
+        public IQueryable<ContainerListDTO> ReadFromUser(int UserId)
         {
             return _context.Container
                     .Include(c => c.Items)
+                    .Where(c => c.UserContainers.Any(uc => uc.UserId == UserId))
                     .Select(c => new ContainerListDTO {
                         Id = c.Id,
                         Name = c.Name,

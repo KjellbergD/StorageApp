@@ -24,6 +24,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StorageApp.Api\StorageApp.Api.csproj" />
+    <ProjectReference Include="..\StorageApp.Entities\StorageApp.Entities.csproj" />
+    <ProjectReference Include="..\StorageApp.Models\StorageApp.Models.csproj" />
+    <ProjectReference Include="..\StorageApp.Shared\StorageApp.Shared.csproj" />
   </ItemGroup>
 
 </Project>
