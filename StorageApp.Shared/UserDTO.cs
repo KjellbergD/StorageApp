@@ -1,3 +1,5 @@
+using System;
+using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 
 namespace StorageApp.Shared
@@ -9,7 +11,5 @@ namespace StorageApp.Shared
         public string UserName { get; set; }
 
         public string FullName { get; set; }
-
-        public ICollection<ContainerDTO> Containers { get; set; }
     }
 }

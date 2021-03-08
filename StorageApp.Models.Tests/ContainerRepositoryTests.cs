@@ -72,6 +72,18 @@ namespace StorageApp.Models.Tests
             // Assert
             Assert.Equal("Fryser", readContainer.Name);
             Assert.Equal(1, readContainer.Items.Count);
+            Assert.Equal(1, readContainer.Users.Count);
+        }
+
+        [Fact]
+        public async Task Read_all_containers_returns_correct_list()
+        {
+            // Act
+            var allContainers = await _repository.ReadAllContainers().ToListAsync();
+
+            // Assert
+            Assert.Equal(1, allContainers.Count);
+            Assert.Equal("Fryser", allContainers[0].Name);
         }
 
         [Fact]

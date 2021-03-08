@@ -54,10 +54,30 @@ namespace StorageApp.Models
                                     Id = i.Id,
                                     Name = i.Name,
                                     Note = i.Note
+                                }).ToList(),
+                                Users = c.UserContainers.Select(u => new UserDTO {
+                                    Id = u.UserId,
+                                    UserName = u.User.UserName,
+                                    FullName = u.User.FullName
                                 }).ToList()
                             };
 
             return await Container.FirstOrDefaultAsync();
+        }
+
+        public IQueryable<ContainerListDTO> ReadAllContainers()
+        {
+            return _context.Container
+                    .Include(c => c.Items)
+                    .Select(c => new ContainerListDTO {
+                        Id = c.Id,
+                        Name = c.Name,
+                        Items = c.Items.Select(i => new ItemDTO {
+                                    Id = i.Id,
+                                    Name = i.Name,
+                                    Note = i.Note
+                                }).ToList()
+                    });
         }
 
         public async Task<HttpStatusCode> Update(ContainerUpdateDTO Container)
