@@ -58,13 +58,13 @@ namespace StorageApp.Models
 
             if (entity == null) return NotFound;
 
-            entity.UserName = User.UserName;
-            entity.FullName = User.FullName;
+            if(User.UserName != null) entity.UserName = User.UserName;
+            if(User.FullName != null) entity.FullName = User.FullName;
             if(User.NewContainer != null) entity.UserContainers.Add(await _context.UserContainer.FindAsync(entity.Id, User.NewContainer));
 
             await _context.SaveChangesAsync();
 
-            return NoContent;
+            return OK;
         }
 
         public async Task<HttpStatusCode> Delete(int UserId)
@@ -83,7 +83,7 @@ namespace StorageApp.Models
             
             await _context.SaveChangesAsync();
 
-            return NoContent;
+            return OK;
         }
     }
 }

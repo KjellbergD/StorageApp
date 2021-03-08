@@ -31,6 +31,10 @@ namespace StorageApp.Models
                 Items = new List<Item>()
             };
 
+            var UserContainer = new UserContainer { UserId = Container.UserId, User = _context.User.Find(Container.UserId), ContainerId = entity.Id, Container = entity };
+
+            entity.UserContainers.Add(UserContainer);
+
             _context.Container.Add(entity);
 
             var affectedRows = await _context.SaveChangesAsync();
@@ -62,7 +66,7 @@ namespace StorageApp.Models
 
             if (entity == null) return NotFound;
 
-            entity.Name = Container.Name;
+            if(Container.Name != null) entity.Name = Container.Name;
             if(Container.ItemId != null) entity.Items.Add(await _context.Item.FindAsync(Container.ItemId));
             if(Container.NewUser != null) entity.UserContainers.Add(await _context.UserContainer.FindAsync(Container.NewUser, entity.Id)); //maybe add to User aswell
 
