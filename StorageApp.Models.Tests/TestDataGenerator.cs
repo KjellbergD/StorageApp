@@ -8,7 +8,7 @@ namespace StorageApp.Models.Test
     {
         public static void GenerateTestData(this StorageContext context)
         {
-            var newUser = new User { UserName = "Dk", FullName = "DanielKjellberg", UserContainers = new List<UserContainer>() };
+            var newUser = new User { UserName = "Dk", Password = "abcd1234", UserContainers = new List<UserContainer>() };
 
             var newContainer = new Container { Name = "Fryser", UserContainers = new List<UserContainer>(), Items = new List<Item>() };
 

@@ -25,6 +25,10 @@ namespace StorageApp.Entities
             modelBuilder.Entity<User>()
                         .HasKey(u => u.Id);
 
+            modelBuilder.Entity<User>()
+                        .HasIndex(u => u.UserName)
+                        .IsUnique();
+
             modelBuilder.Entity<Container>()
                         .HasKey(c => c.Id);
 

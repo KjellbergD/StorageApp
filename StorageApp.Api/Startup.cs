@@ -12,6 +12,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using StorageApp.Entities;
+using StorageApp.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 
 namespace StorageApp.Api
 {
@@ -32,7 +35,26 @@ namespace StorageApp.Api
             services.AddDbContext<StorageContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("ConnectionString"),
                b => b.MigrationsAssembly("StorageApp.Api")));
-               
+            services.AddScoped<IStorageContext, StorageContext>();
+            services.AddCors();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = "Cookies";
+            }).AddCookie("Cookies", options =>
+            {
+                options.Cookie.Name = "auth_cookie";
+                options.Cookie.SameSite = SameSiteMode.None;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                options.Events = new CookieAuthenticationEvents
+                {
+                    OnRedirectToLogin = redirectContext =>
+                    {
+                        redirectContext.HttpContext.Response.StatusCode = 401;
+                        return Task.CompletedTask;
+                    }
+                };
+            }); 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "StorageApp.Api", Version = "v1" });
@@ -52,6 +74,8 @@ namespace StorageApp.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

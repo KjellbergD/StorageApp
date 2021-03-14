@@ -11,6 +11,7 @@ namespace StorageApp.Models
     {
         Task<(int affectedRows, int id)> Create(UserCreateDTO User);
         Task<UserDetailsDTO> Read(int UserId);
+        Task<UserAuthDTO> ReadUserLogin(string username);
         Task<HttpStatusCode> Update(UserUpdateDTO User);
         Task<HttpStatusCode> Delete(int UserId);
     }

@@ -36,7 +36,7 @@ namespace StorageApp.Models.Tests
             // Arrange
             var user = new UserCreateDTO {
                 UserName = "betterdaniel",
-                FullName = "fuldtnavn"
+                Password = "godtpw"
             };
 
             // Act
@@ -71,7 +71,6 @@ namespace StorageApp.Models.Tests
 
             // Assert
             Assert.Equal("Dk", readUser.UserName);
-            Assert.Equal("DanielKjellberg", readUser.FullName);
             Assert.Equal(1, readUser.ContainerIds.Count);
         }
 
@@ -97,8 +96,7 @@ namespace StorageApp.Models.Tests
             // Arrange
             var userUpdate = new UserUpdateDTO {
                 Id = 1,
-                UserName = "kaldmigbob",
-                FullName = "bedrefuldtnavn"
+                UserName = "kaldmigbob"
             };
 
             // Act

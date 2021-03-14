@@ -10,7 +10,7 @@ namespace StorageApp.Entities
 
         public string UserName { get; set; }
 
-        public string FullName { get; set; }
+        public string Password { get; set; }
 
         public ICollection<UserContainer> UserContainers { get; set; }
     }

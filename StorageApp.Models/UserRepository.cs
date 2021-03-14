@@ -27,7 +27,7 @@ namespace StorageApp.Models
             var entity = new User
             {
                 UserName = User.UserName,
-                FullName = User.FullName
+                Password = User.Password
             };
 
             _context.User.Add(entity);
@@ -45,11 +45,22 @@ namespace StorageApp.Models
                         {
                             Id = u.Id,
                             UserName = u.UserName,
-                            FullName = u.FullName,
                             ContainerIds = u.UserContainers.Select(uc => uc.ContainerId).ToList()
                         };
 
             return await User.FirstOrDefaultAsync();
+        }
+
+        public async Task<UserAuthDTO> ReadUserLogin(string username)
+        {
+            return await _context.User.Where(u => u.UserName == username)
+                                      .Select(u => new UserAuthDTO 
+                                      {   
+                                          Id = u.Id,
+                                          UserName = u.UserName, 
+                                          Password = u.Password
+                                      })
+                                      .FirstOrDefaultAsync();    
         }
 
         public async Task<HttpStatusCode> Update(UserUpdateDTO User)
@@ -59,7 +70,6 @@ namespace StorageApp.Models
             if (entity == null) return NotFound;
 
             if(User.UserName != null) entity.UserName = User.UserName;
-            if(User.FullName != null) entity.FullName = User.FullName;
             if(User.NewContainer != null) entity.UserContainers.Add(await _context.UserContainer.FindAsync(entity.Id, User.NewContainer));
 
             await _context.SaveChangesAsync();

@@ -59,8 +59,7 @@ namespace StorageApp.Models
                                 }).ToList(),
                                 Users = c.UserContainers.Select(u => new UserDTO {
                                     Id = u.UserId,
-                                    UserName = u.User.UserName,
-                                    FullName = u.User.FullName
+                                    UserName = u.User.UserName
                                 }).ToList()
                             };
 
