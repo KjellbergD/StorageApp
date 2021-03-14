@@ -36,8 +36,8 @@ namespace StorageApp.Api
                options.UseSqlServer(Configuration.GetConnectionString("ConnectionString"),
                b => b.MigrationsAssembly("StorageApp.Api")));
             services.AddScoped<IStorageContext, StorageContext>();
-            services.AddCors();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddCors();
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = "Cookies";
@@ -70,8 +70,6 @@ namespace StorageApp.Api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "StorageApp.Api v1"));
             }
-
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 

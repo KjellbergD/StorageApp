@@ -29,11 +29,13 @@ namespace StorageApp.Models
                 UserName = User.UserName,
                 Password = User.Password
             };
+            Console.WriteLine(3);
 
             _context.User.Add(entity);
 
+            Console.WriteLine(4);
             var affectedRows = await _context.SaveChangesAsync();
-
+            Console.WriteLine(5);
             return (affectedRows, entity.Id);
         }
 

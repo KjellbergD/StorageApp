@@ -54,7 +54,7 @@ namespace StorageApp.Api.Controllers
         {
             string hashedpw = BC.HashPassword(user.Password);
             user.Password = hashedpw;
-
+            Console.WriteLine(2);
             var result = await _repository.Create(user);
             if(result.affectedRows == 0) return BadRequest("Username already exists");
 
@@ -97,7 +97,7 @@ namespace StorageApp.Api.Controllers
         [HttpGet("authorized")]
         [ProducesResponseType(Status200OK)]
         [ProducesResponseType(Status404NotFound)]
-        public async Task<ActionResult<UserDetailsDTO>> Get()
+        public ActionResult<UserDetailsDTO> Get()
         {
             //get claim
             Console.WriteLine(this.User.Claims.FirstOrDefault());
